@@ -1,3 +1,8 @@
+# NBA All-Star Predictor
+# Author: Anowar Mahmud
+# Description: Predicts NBA All-Star status based on player stats using machine learning.
+# Dataset: ALLSTAR.csv (include source in README)
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
