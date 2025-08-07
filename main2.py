@@ -30,7 +30,7 @@ features = ["ppg", "apg", "rpg", "FG%", "FT%", "3P%", "Age", "height_inches", "a
             "total_assists", "total_rebounds", "game_pct", "sufficient_games"]
 Y = data["All_Star"]
 
-# Drops any and all unused data 
+# Drops any unused data 
 data = data.dropna(subset=features + ["All_Star"])
 
 # X = the dependencies Y = the target (Step 5)
@@ -66,7 +66,7 @@ probabilities = model_ppg.predict_proba(ppg_range)[:, 1]
 
 # Accuracy Testing 
 accuracy = accuracy_score(Y_test, Y_pred)
-print("\n✅ Accuracy score:", accuracy)
+print("\n Accuracy score:", accuracy)
 
 # Importance of each category
 feature_importance = pd.DataFrame({
@@ -114,7 +114,7 @@ if (new_player['ppg'].iloc[0] >= 32 or
      new_player['rpg'].iloc[0] >= 12 and
      new_player['FG%'].iloc[0] >= 50 and
      new_player['sufficient_games'].iloc[0] >= 65)):
-    print("\n💥 A god among men...")
+    print("\n A god among men...")
 else:
      print("\nPrediction:", "All-Star" if new_pred[0] == 1 else "Didn't make the cut")
 
