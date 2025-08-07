@@ -89,7 +89,7 @@ new_player = pd.DataFrame({
     "all_games": [80]
 })
 
-# Covnerting data for the test player
+# Converting data for the test player
 new_player['total_points'] = new_player['ppg'] * new_player['all_games']
 new_player['total_rebounds'] = new_player['rpg'] * new_player['all_games']
 new_player['total_assists'] = new_player['apg'] * new_player['all_games']
@@ -103,7 +103,7 @@ pd.set_option('display.width', None)
 pd.set_option('display.max_colwidth', None)
 print(new_player)
 
-# Using the new players stats with the features 
+# Using the new player's stats with the features 
 new_player_features = new_player[features]
 new_player_scaled = scaler.transform(new_player_features)
 new_pred = model.predict(new_player_scaled)
@@ -126,14 +126,14 @@ print(f"- Total Rebounds in the Season: {new_player['total_rebounds'].iloc[0]}")
 print(f"- Game Percantage: {new_player['game_pct'].iloc[0]}")
 print(f"- Sufficient games threshold met: {bool(new_player['sufficient_games'].iloc[0])}")
 
-# Graph that ranks each stat based off of relevance
+# Graph that ranks each stat based on relevance
 plt.figure(figsize= (12, 6))
 plt.barh(feature_importance['feature'], feature_importance['importance'], color = 'skyblue')
 plt.xlabel("Feature Importance Scores")
 plt.title("Feature Importance from 2017 All Stars")
 plt.tight_layout()
 
-# Probabality graph to see how PPG affects someones chances for being an all star
+# Probability graph to see how PPG affects someone's chances for being an all-star
 plt.figure(figsize=(8, 5))
 plt.plot(ppg_range, probabilities, color='blue', label="Probability of All-Star")
 plt.xlabel("Points Per Game (PPG)")
