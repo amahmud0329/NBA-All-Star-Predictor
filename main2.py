@@ -1,8 +1,3 @@
-# NBA All-Star Predictor
-# Author: Anowar Mahmud
-# Description: Predicts NBA All-Star status based on player stats using machine learning.
-# Dataset: ALLSTAR.csv
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -28,14 +23,14 @@ data['total_points'] = data['ppg'] * data['all_games']
 data['total_assists'] = data['apg'] * data['all_games'] 
 data['total_rebounds'] = data['rpg'] * data['all_games']
 data['game_pct'] = data['all_games'] / 82
-data['sufficient_games'] = (data['all_games'] >= 65).astype(int)
+data['sufficient_games'] = (data['all_games'] >= 30).astype(int)
 
 # Make them features to avoid syntax errors (Step 4)
 features = ["ppg", "apg", "rpg", "FG%", "FT%", "3P%", "Age", "height_inches", "all_games", "total_points",
             "total_assists", "total_rebounds", "game_pct", "sufficient_games"]
 Y = data["All_Star"]
 
-# Drops any unused data 
+# Drops any and all unused data 
 data = data.dropna(subset=features + ["All_Star"])
 
 # X = the dependencies Y = the target (Step 5)
@@ -71,27 +66,37 @@ probabilities = model_ppg.predict_proba(ppg_range)[:, 1]
 
 # Accuracy Testing 
 accuracy = accuracy_score(Y_test, Y_pred)
-print("\n Accuracy score:", accuracy)
+print("\nAccuracy score:", accuracy)
 
 # Importance of each category
 feature_importance = pd.DataFrame({
     'feature': features,
     'importance': model.feature_importances_
 }).sort_values('importance', ascending=False)
-print("\n📊 Feature Importance:")
+print("\nFeature Importance:")
 print(feature_importance)
+
+user_input = float(input("Enter ppg: "))
+user_input2 = float(input("Enter apg: "))
+user_input3 = float(input("Enter rpg: "))
+user_input4 = float(input("Enter FG%: "))
+user_input5 = float(input("Enter FT%: "))
+user_input6 = float(input("Enter 3P%: "))
+user_input7 = int(input("Enter Age: "))
+user_input8 = int(input("Enter Height (Inches): "))
+user_input9 = int(input("Enter Games Played: "))
 
 # Data set
 new_player = pd.DataFrame({
-    "ppg": [25],
-    "apg": [5],
-    "rpg": [2],
-    "FG%": [67],
-    "FT%": [66],
-    "3P%": [37],
-    "Age": [26],
-    "height_inches": [80],
-    "all_games": [80]
+    "ppg": [user_input],
+    "apg": [user_input2],
+    "rpg": [user_input3],
+    "FG%": [user_input4],
+    "FT%": [user_input5],
+    "3P%": [user_input6],
+    "Age": [user_input7],
+    "height_inches": [user_input8],
+    "all_games": [user_input9]
 })
 
 # Converting data for the test player
@@ -114,12 +119,12 @@ new_player_scaled = scaler.transform(new_player_features)
 new_pred = model.predict(new_player_scaled)
 
 # Message for inputs
-if (new_player['ppg'].iloc[0] >= 32 or 
+if (new_player['ppg'].iloc[0] >= 32 and 
     (new_player['apg'].iloc[0] >= 12 and 
      new_player['rpg'].iloc[0] >= 12 and
      new_player['FG%'].iloc[0] >= 50 and
-     new_player['sufficient_games'].iloc[0] >= 65)):
-    print("\n A god among men...")
+     new_player['sufficient_games'].iloc[0] >= 30)):
+    print("\n💥 A god among men...")
 else:
      print("\nPrediction:", "All-Star" if new_pred[0] == 1 else "Didn't make the cut")
 
